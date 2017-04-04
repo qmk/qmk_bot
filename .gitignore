@@ -1,0 +1,10 @@
+.cache
+.coverage
+.eggs
+.idea
+.qmk_bot
+*.pyc
+activate
+coverage.xml
+htmlcov
+qmk_bot.egg-info

@@ -1,4 +1,4 @@
-FROM debian:jesse
+FROM debian:jessie
 MAINTAINER Zach White <skullydazed@gmail.com>
 
 EXPOSE 5000

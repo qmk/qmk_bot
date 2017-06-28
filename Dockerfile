@@ -3,8 +3,12 @@ MAINTAINER Zach White <skullydazed@gmail.com>
 
 EXPOSE 5000
 RUN apt-get update && apt-get install --no-install-recommends -y \
+    build-essential \
     git \
+    libmysqlclient-dev \
+    mysql-client \
     python3 \
+    python3-dev \
     python3-pip \
     python3-setuptools \
     && rm -rf /var/lib/apt/lists/*

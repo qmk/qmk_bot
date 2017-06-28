@@ -3,7 +3,7 @@
 #
 # https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/
 import os
-from setuptools import setup, find_packages, Command
+from setuptools import setup, find_packages
 
 
 def read(*paths):
@@ -21,7 +21,7 @@ setup(
     license='MIT',
     author='Zach White',
     author_email='skullydazed@gmail.com',
-    install_requires=['flask', 'github-webhook'], 
+    install_requires=['flask', 'flask-mysqldb', 'github-webhook'],
     packages=find_packages(),
     include_package_data=True,
     classifiers=[

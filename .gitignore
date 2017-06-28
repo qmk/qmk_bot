@@ -4,6 +4,7 @@
 .idea
 .qmk_bot
 *.pyc
+*.swp
 activate
 coverage.xml
 htmlcov

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Do some sanity checking
-if ! [ -f setup.py -a -f src/qmk_bot.py ]; then
+if ! [ -f setup.py -a -f qmk_bot.py ]; then
 	echo 'You must run this from the top level of qmk_bot!'
 	exit 1
 fi
@@ -27,4 +27,4 @@ if [ $? -eq 0 ]; then
 fi
 
 # Run flake8
-flake8 $(find src -name \*.py)
+flake8 *.py

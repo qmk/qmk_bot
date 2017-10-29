@@ -28,4 +28,4 @@ def on_push(data):
     print('Got webhook request:')
     print(data)
     print('Enqueing update:')
-    print(job = update_kb_redis.delay())
+    print(update_kb_redis.delay())

@@ -27,5 +27,6 @@ def on_push(data):
     """
     print('Got webhook request:')
     print(data)
-    print('Enqueing update:')
-    print(update_kb_redis.delay())
+    if data['repository']['full_name'] == 'qmk/qmk_firmware':
+        print('Enqueing update:')
+        print(update_kb_redis.delay())

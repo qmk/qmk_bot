@@ -1,6 +1,7 @@
 from flask import Flask
 from github_webhook import Webhook
-from update_kb_redis import update_kb_redis
+
+from update_kb_redis import update_needed
 
 
 # Setup
@@ -27,6 +28,5 @@ def on_push(data):
     """
     print('Got webhook request:')
     print(data)
-    if data['repository']['full_name'] == 'qmk/qmk_firmware':
-        print('Enqueing update:')
-        print(update_kb_redis.delay())
+    if data['repository']['full_name'] in ['qmk/qmk_firmware', 'qmk/chibios', 'qmk/chibios-contrib']:
+        print(update_needed.delay(repo=data['repository']['full_name'], old_hash=data['before'], new_hash=data['after']))

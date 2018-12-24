@@ -29,7 +29,7 @@ def on_push(data):
     """
     print('Got webhook request:')
     print(data)
-    if data['repository']['full_name'] in ['qmk/qmk_firmware', 'qmk/chibios', 'qmk/chibios-contrib']:
+    if data['ref'] == 'refs/heads/master' and data['repository']['full_name'] in ['qmk/qmk_firmware', 'qmk/chibios', 'qmk/chibios-contrib']:
         print('Triggering update.')
         num_commits = len(data['commits'])
         name = data['pusher']['name']

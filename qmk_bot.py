@@ -3,9 +3,7 @@ from pprint import pprint
 from flask import Flask
 from github_webhook import Webhook
 
-from qmk_commands import discord_msg
-from update_kb_redis import update_needed
-
+import discord
 
 # Setup
 app = Flask(__name__)
@@ -39,4 +37,4 @@ def on_push(data):
         new_hash=data['after']
         forced = 'force ' if data['forced'] else ''
 
-        discord_msg('info', '%s has %spushed %s commits to %s. Head is now %s. Changes: %s' % (name, forced, num_commits, repo, new_hash, data['compare']))
+        discord.message('info', '%s has %spushed %s commits to %s. Head is now %s. Changes: %s' % (name, forced, num_commits, repo, new_hash, data['compare']))

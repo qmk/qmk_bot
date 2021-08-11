@@ -30,16 +30,13 @@ def on_push(data):
     """Handle a webhook from github.
     """
     print('Got webhook request:')
-    pprint(data)
+    #pprint(data)
     if data['ref'] == 'refs/heads/master' and data['repository']['full_name'] in ['qmk/qmk_firmware', 'qmk/chibios', 'qmk/chibios-contrib']:
         print('Triggering update.')
         num_commits = len(data['commits'])
         name = data['pusher']['name']
         repo = data['repository']['full_name']
-        old_hash=data['before']
         new_hash=data['after']
-        commit_url = data['head_commit']['url']
         forced = 'force ' if data['forced'] else ''
 
-        print(update_needed.delay(repo=repo, old_hash=old_hash, new_hash=new_hash))
         discord_msg('info', '%s has %spushed %s commits to %s. Head is now %s. Changes: %s' % (name, forced, num_commits, repo, new_hash, data['compare']))

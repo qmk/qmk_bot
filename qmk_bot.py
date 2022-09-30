@@ -25,16 +25,28 @@ def healthcheck():
 
 @webhook.hook('push')
 def on_push(data):
-    """Handle a webhook from github.
+    """Handle a push webhook from github.
     """
-    print('Got webhook request:')
-    #pprint(data)
+    print('Got push webhook request')
     if data['ref'] == 'refs/heads/master' and data['repository']['full_name'] in ['qmk/qmk_firmware', 'qmk/chibios', 'qmk/chibios-contrib']:
-        print('Triggering update.')
+        print('Posting Discord message')
         num_commits = len(data['commits'])
         name = data['pusher']['name']
         repo = data['repository']['full_name']
-        new_hash=data['after']
+        new_hash = data['after']
         forced = 'force ' if data['forced'] else ''
 
         discord.message('info', '%s has %spushed %s commits to %s. Head is now %s. Changes: %s' % (name, forced, num_commits, repo, new_hash, data['compare']))
+
+
+@webhook.hook('workflow_run')
+def on_workflow_run(data):
+    """Handle a workflow_run webhook from github.
+    """
+    print('Got workflow_run webhook request')
+    if data['action'] == 'completed':
+        workflow = data['workflow']
+        workflow_run = data['workflow_run']
+        if workflow['name'] == 'Update develop after master merge' and workflow_run['conclusion'] == 'failure':
+            print('Posting Discord message')
+            discord.message('error', '`master` -> `develop` merge failed! Run: %s' % (workflow_run['html_url']))

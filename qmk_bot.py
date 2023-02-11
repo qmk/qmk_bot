@@ -47,7 +47,7 @@ def on_workflow_run(data):
     if data['action'] == 'completed':
         workflow = data['workflow']
         workflow_run = data['workflow_run']
-        if workflow['conclusion'] == 'failure':
+        if workflow.get('conclusion') == 'failure':
             if workflow['name'] == 'Update develop after master merge':
                 print('Posting Discord message: failed master -> develop merge')
                 discord.message('error', '`master` -> `develop` merge failed! Run: %s' % (workflow_run['html_url']))

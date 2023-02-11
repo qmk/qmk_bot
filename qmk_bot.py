@@ -47,6 +47,11 @@ def on_workflow_run(data):
     if data['action'] == 'completed':
         workflow = data['workflow']
         workflow_run = data['workflow_run']
-        if workflow['name'] == 'Update develop after master merge' and workflow_run['conclusion'] == 'failure':
-            print('Posting Discord message')
-            discord.message('error', '`master` -> `develop` merge failed! Run: %s' % (workflow_run['html_url']))
+        if workflow['conclusion'] == 'failure':
+            if workflow['name'] == 'Update develop after master merge':
+                print('Posting Discord message: failed master -> develop merge')
+                discord.message('error', '`master` -> `develop` merge failed! Run: %s' % (workflow_run['html_url']))
+            elif workflow['name'] == 'Update API Data':
+                branch = workflow_run['head_branch']
+                print('Posting Discord message: failed API data update (%s)' % (branch))
+                discord.message('error', 'API data update failed for branch %s' % (branch))
